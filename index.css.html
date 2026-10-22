@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планеты Солнечной системы | Энциклопедия</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="solar-header" id="solarHeader">
+        <div class="sun" id="sun"></div>
+        <div class="orbit-container" id="orbitContainer"></div>
+    </div>
+
+    <div class="container">
+        <h1>🌍 Планеты Солнечной системы</h1>
+        <div class="subtitle">Нажми на планету, чтобы узнать её секреты</div>
+
+        <div class="planets-grid" id="planetsGrid"></div>
+
+        <div class="detail-panel" id="detailPanel">
+            <div class="planet-info" id="planetInfo">
+                <h2 id="detailName" style="font-size: 2.5rem; color: #ffd966;">Меркурий</h2>
+                <div class="info-row"><span class="info-label">Размер (диаметр)</span><span class="info-value" id="detailDiameter">4 879 км</span></div>
+                <div class="info-row"><span class="info-label">Температура</span><span class="info-value" id="detailTemp">+430°C / -180°C</span></div>
+                <div class="info-row"><span class="info-label">Спутники</span><span class="info-value" id="detailMoons">0</span></div>
+                <div class="fun-fact" id="detailFact">☄️ Интересный факт: Самая быстрая планета, год длится 88 земных суток.</div>
+
+                <div class="weight-calculator">
+                    <h3 style="color:#ffd966;">⚖️ Сколько ты будешь весить здесь?</h3>
+                    <div class="weight-input">
+                        <input type="number" id="weightInput" placeholder="Твой вес (кг)" value="70">
+                        <button id="calculateWeightBtn">Рассчитать</button>
+                    </div>
+                    <div class="weight-result" id="weightResult">≈ 26.4 кг</div>
+                    <div style="color:#9bb6d0;">Гравитация: <span id="gravityValue">0.38</span> от земной</div>
+                </div>
+            </div>
+            <div class="planet-gallery" id="planetGallery">
+                <img class="gallery-img" id="galleryImg" src="https://science.nasa.gov/wp-content/uploads/2023/06/mercury-messenger-global-view.jpg?w=1024" alt="Фото планеты">
+                <div class="photo-credit" id="photoCredit">📸 NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie Institution of Washington</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>🚀 Данные на основе реальных миссий NASA · Энциклопедия «Планеты» 2026</footer>
+
+    <script>
+        (function() {
+            const planets = [
+                {
+                    name: "Меркурий",
+                    diameter: "4 879 км",
+                    temperature: "+430°C / -180°C",
+                    moons: 0,
+                    gravity: 0.38,
+                    fact: "Меркурий — самая быстрая планета: год длится 88 земных суток. Днём поверхность раскаляется, а ночью остывает до -180°C.",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/06/mercury-messenger-global-view.jpg?w=1024",
+                    credit: "NASA/Johns Hopkins APL/Carnegie Institution",
+                    emoji: "☿"
+                },
+                {
+                    name: "Венера",
+                    diameter: "12 104 км",
+                    temperature: "+475°C (средняя)",
+                    moons: 0,
+                    gravity: 0.91,
+                    fact: "На Венере идут дожди из серной кислоты, но они испаряются, не долетая до поверхности из-за жары. Атмосфера в 90 раз плотнее земной!",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/07/venus-mariner10-pia00244.jpg?w=1024",
+                    credit: "NASA/JPL-Caltech",
+                    emoji: "♀"
+                },
+                {
+                    name: "Земля",
+                    diameter: "12 742 км",
+                    temperature: "+15°C (средняя)",
+                    moons: 1,
+                    gravity: 1.0,
+                    fact: "Единственная известная планета с жизнью. 71% поверхности покрыто водой. Луна стабилизирует ось вращения Земли.",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/08/earth-epic-1.jpg?w=1024",
+                    credit: "NASA/NOAA/DSCOVR",
+                    emoji: "🌍"
+                },
+                {
+                    name: "Марс",
+                    diameter: "6 779 км",
+                    temperature: "-65°C (средняя)",
+                    moons: 2,
+                    gravity: 0.38,
+                    fact: "Марс — планета с самыми высокими вулканами. Олимп — 22 км высотой! Здесь есть следы древних рек.",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/07/mars-viking-global.jpg?w=1024",
+                    credit: "NASA/JPL/USGS",
+                    emoji: "♂"
+                },
+                {
+                    name: "Юпитер",
+                    diameter: "139 820 км",
+                    temperature: "-110°C (облака)",
+                    moons: 95,
+                    gravity: 2.53,
+                    fact: "Юпитер в 2.5 раза массивнее всех остальных планет вместе взятых. Большое Красное Пятно — гигантский шторм, который длится веками.",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/06/jupiter-hubble-2023.jpg?w=1024",
+                    credit: "NASA/ESA/STScI",
+                    emoji: "♃"
+                },
+                {
+                    name: "Сатурн",
+                    diameter: "116 460 км",
+                    temperature: "-140°C",
+                    moons: 146,
+                    gravity: 1.07,
+                    fact: "Знаменитые кольца Сатурна состоят из кусочков льда и пыли. Некоторые из них размером с дом, другие — с пылинку.",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/07/saturn-hubble-2023.jpg?w=1024",
+                    credit: "NASA/ESA/STScI",
+                    emoji: "🪐"
+                },
+                {
+                    name: "Уран",
+                    diameter: "50 724 км",
+                    temperature: "-195°C",
+                    moons: 27,
+                    gravity: 0.89,
+                    fact: "Уран вращается «лёжа на боку» — ось наклонена на 98°. Из-за этого на планете очень странные сезоны.",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/08/uranus-voyager2-png.webp?w=1024",
+                    credit: "NASA/JPL-Caltech",
+                    emoji: "⛢"
+                },
+                {
+                    name: "Нептун",
+                    diameter: "49 244 км",
+                    temperature: "-200°C",
+                    moons: 14,
+                    gravity: 1.14,
+                    fact: "На Нептуне дуют самые быстрые ветры в Солнечной системе — до 2100 км/ч! Тёмное пятно — гигантский ураган.",
+                    img: "https://science.nasa.gov/wp-content/uploads/2023/08/neptune-voyager2.jpg?w=1024",
+                    credit: "NASA/JPL-Caltech",
+                    emoji: "♆"
+                }
+            ];
+
+            let selectedPlanetIndex = 0;
+
+            const planetsGrid = document.getElementById('planetsGrid');
+            const detailName = document.getElementById('detailName');
+            const detailDiameter = document.getElementById('detailDiameter');
+            const detailTemp = document.getElementById('detailTemp');
+            const detailMoons = document.getElementById('detailMoons');
+            const detailFact = document.getElementById('detailFact');
+            const galleryImg = document.getElementById('galleryImg');
+            const photoCredit = document.getElementById('photoCredit');
+            const gravityValue = document.getElementById('gravityValue');
+            const weightResult = document.getElementById('weightResult');
+            const weightInput = document.getElementById('weightInput');
+            const calculateBtn = document.getElementById('calculateWeightBtn');
+
+            const orbitContainer = document.getElementById('orbitContainer');
+
+            function renderPlanetCards() {
+                let html = '';
+                planets.forEach((p, idx) => {
+                    const activeClass = (idx === selectedPlanetIndex) ? 'active' : '';
+                    html += `
+                        <div class="planet-card ${activeClass}" data-index="${idx}">
+                            <div class="planet-emoji">${p.emoji}</div>
+                            <div class="planet-name">${p.name}</div>
+                            <div class="planet-badge">${p.moons} спутников</div>
+                        </div>
+                    `;
+                });
+                planetsGrid.innerHTML = html;
+
+                document.querySelectorAll('.planet-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const idx = parseInt(card.dataset.index);
+                        if (!isNaN(idx)) {
+                            selectedPlanetIndex = idx;
+                            updateDetailPanel();
+                            renderPlanetCards(); 
+                        }
+                    });
+                });
+            }
+
+            function updateDetailPanel() {
+                const p = planets[selectedPlanetIndex];
+                detailName.textContent = p.name;
+                detailDiameter.textContent = p.diameter;
+                detailTemp.textContent = p.temperature;
+                detailMoons.textContent = p.moons;
+                detailFact.textContent = `💫 Интересный факт: ${p.fact}`;
+                galleryImg.src = p.img;
+                photoCredit.textContent = `📸 ${p.credit}`;
+                gravityValue.textContent = p.gravity;
+
+                calculateWeight();
+            }
+
+            function calculateWeight() {
+                const earthWeight = parseFloat(weightInput.value);
+                if (isNaN(earthWeight) || earthWeight <= 0) {
+                    weightResult.textContent = 'Введите корректный вес';
+                    return;
+                }
+                const g = planets[selectedPlanetIndex].gravity;
+                const newWeight = (earthWeight * g).toFixed(1);
+                weightResult.textContent = `≈ ${newWeight} кг`;
+            }
+
+            function createSolarSystemAnimation() {
+                const planetsForOrbit = planets.slice(0, 8); // все 8 планет
+                const distances = [1.8, 2.6, 3.4, 4.2, 5.8, 7.6, 9.2, 10.5]; // относительные расстояния
+                const colors = ['#a5a5a5', '#e6b856', '#3b82f6', '#c4554c', '#d8a27a', '#eed7a0', '#8fd8d8', '#3d5cff'];
+                const sizes = [6, 8, 10, 7, 22, 20, 16, 16]; // размеры в пикселях * масштаб
+
+                orbitContainer.innerHTML = '';
+
+                for (let i = 0; i < planetsForOrbit.length; i++) {
+                    const orbitRadius = distances[i] * 20; // пиксели
+
+                    const orbitLine = document.createElement('div');
+                    orbitLine.className = 'orbit-line';
+                    orbitLine.style.width = `${orbitRadius * 2}px`;
+                    orbitLine.style.height = `${orbitRadius * 2}px`;
+                    orbitLine.style.left = '0px';
+                    orbitLine.style.borderColor = '#ffffff22';
+                    orbitContainer.appendChild(orbitLine);
+
+                    const orbitPlanet = document.createElement('div');
+                    orbitPlanet.className = 'planet-orbit';
+                    orbitPlanet.style.animation = `rotate ${20 + i * 8}s linear infinite`; // разные скорости
+                    orbitPlanet.style.width = `${orbitRadius}px`;
+                    orbitPlanet.style.height = '0px';
+                    orbitPlanet.style.left = '0px';
+                    orbitPlanet.style.top = '50%';
+
+                    const dot = document.createElement('div');
+                    dot.className = 'planet-dot';
+                    dot.style.width = `${sizes[i]}px`;
+                    dot.style.height = `${sizes[i]}px`;
+                    dot.style.backgroundColor = colors[i];
+                    dot.style.boxShadow = `0 0 20px ${colors[i]}`;
+                    dot.style.right = `-${sizes[i]/2}px`;
+                    dot.style.top = `-${sizes[i]/2}px`;
+                    dot.style.position = 'absolute';
+                    dot.title = planetsForOrbit[i].name;
+
+                    const label = document.createElement('span');
+                    label.className = 'planet-label';
+                    label.textContent = planetsForOrbit[i].name;
+                    label.style.top = `-25px`;
+                    label.style.right = `-20px`;
+
+                    dot.addEventListener('mouseenter', () => {
+                        label.style.opacity = 1;
+                    });
+                    dot.addEventListener('mouseleave', () => {
+                        label.style.opacity = 0;
+                    });
+                    label.style.opacity = 0;
+                    label.style.transition = '0.2s';
+
+                    orbitPlanet.appendChild(dot);
+                    orbitPlanet.appendChild(label);
+                    orbitContainer.appendChild(orbitPlanet);
+                }
+            }
+
+            renderPlanetCards();
+            updateDetailPanel();
+            createSolarSystemAnimation();
+
+            calculateBtn.addEventListener('click', calculateWeight);
+            weightInput.addEventListener('input', calculateWeight); // динамически
+
+
+            calculateWeight();
+        })();
+    </script>
+</body>
+</html>

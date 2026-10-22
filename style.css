@@ -1,0 +1,305 @@
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(ellipse at 20% 30%, #0a0f2a, #030514);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+    
+        .solar-header {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            background: radial-gradient(circle at 30% 50%, #1a1f3a, #020617);
+            overflow: hidden;
+            border-bottom: 2px solid #ffd96655;
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .sun {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #ffee88, #ffaa00);
+            border-radius: 50%;
+            left: 15%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 80px #ffbb33, 0 0 150px #ffaa00;
+            z-index: 10;
+        }
+
+        .orbit-container {
+            position: absolute;
+            left: 15%;
+            top: 50%;
+            width: 80%;
+            height: 300px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .orbit-line {
+            position: absolute;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+
+        .planet-orbit {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            border-radius: 50%;
+            animation: rotate linear infinite;
+            transform-origin: center left;
+        }
+
+        .planet-dot {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 15px currentColor;
+            transition: transform 0.3s;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .planet-dot:hover {
+            transform: scale(1.5);
+            z-index: 100;
+            filter: brightness(1.3);
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg) translateY(-50%); }
+            to { transform: rotate(360deg) translateY(-50%); }
+        }
+
+
+        .planet-label {
+            position: absolute;
+            color: #ddd;
+            font-size: 12px;
+            white-space: nowrap;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 6px;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ffdb9c, #ffe68f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px #ffd966;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aaccff;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+        }
+
+
+        .planets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .planet-card {
+            background: rgba(10, 25, 45, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid #3c5e8b;
+            border-radius: 30px;
+            padding: 20px 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 15px 25px -8px black;
+            text-align: center;
+        }
+
+        .planet-card:hover {
+            border-color: #f9d77e;
+            transform: translateY(-8px);
+            background: #122b44;
+            box-shadow: 0 20px 30px -5px #f0b32355;
+        }
+
+        .planet-card.active {
+            border: 3px solid #ffc857;
+            background: #1a334f;
+        }
+
+        .planet-emoji {
+            font-size: 4rem;
+            filter: drop-shadow(0 0 10px #b4d9ff);
+            margin-bottom: 8px;
+        }
+
+        .planet-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #fbe4a0;
+        }
+
+        .planet-badge {
+            background: #2b4560;
+            border-radius: 30px;
+            padding: 5px 12px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+
+        .detail-panel {
+            background: #0b1b2fdd;
+            backdrop-filter: blur(10px);
+            border: 1px solid #607d8b;
+            border-radius: 50px;
+            padding: 30px;
+            margin: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            box-shadow: 0 20px 30px #00000080;
+        }
+
+        .planet-info {
+            flex: 2;
+            min-width: 280px;
+        }
+
+        .planet-gallery {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .info-row {
+            display: flex;
+            margin: 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 1px dashed #446688;
+            padding-bottom: 8px;
+        }
+
+        .info-label {
+            width: 150px;
+            color: #b0d0ff;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #fff7c0;
+        }
+
+        .fun-fact {
+            background: #162d48;
+            border-radius: 40px;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-left: 6px solid #ffb84d;
+            font-size: 1.1rem;
+        }
+
+        .weight-calculator {
+            background: #0a1929;
+            border-radius: 60px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid goldenrod;
+        }
+
+        .weight-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .weight-input input {
+            background: #111c2e;
+            border: 2px solid #3f6a9a;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            color: white;
+            width: 150px;
+        }
+
+        .weight-input button {
+            background: #3b5e8b;
+            border: none;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+
+        .weight-input button:hover {
+            background: #5f8bc9;
+            box-shadow: 0 0 15px #95bcf5;
+        }
+
+        .weight-result {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffdb7e;
+            margin-top: 15px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            border-radius: 30px;
+            border: 3px solid white;
+            box-shadow: 0 0 30px #78bcff;
+            margin-bottom: 15px;
+        }
+
+        .photo-credit {
+            font-size: 0.8rem;
+            color: #99aacc;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #5f7d9c;
+            border-top: 1px solid #26466d;
+            margin-top: 30px;
+        }
+
+
+        @media (max-width: 700px) {
+            .solar-header { height: 280px; }
+            .sun { width: 70px; height: 70px; }
+        }
